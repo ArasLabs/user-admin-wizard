@@ -1,0 +1,141 @@
+<AML>
+ <Item type="Form" id="C86C2C77A0604A81AF0A7BC420C19E83" action="add">
+  <description>User Admin Wizard Form</description>
+  <height>700</height>
+  <name>User Administration Wizard</name>
+  <stylesheet><![CDATA[../styles/default.css]]></stylesheet>
+  <width>600</width>
+  <Relationships>
+   <Item type="Body" id="5AECE34D9AFF469A8BDD218BD021A88B" action="add">
+    <sort_order>128</sort_order>
+    <source_id keyed_name="User Administration Wizard" type="Form">C86C2C77A0604A81AF0A7BC420C19E83</source_id>
+    <Relationships>
+     <Item type="Field" id="F928978AFD45445A9926984A02316A71" action="add">
+      <bg_color>#FFFFFF</bg_color>
+      <border_width>2</border_width>
+      <field_type>html</field_type>
+      <font_color>#000000</font_color>
+      <font_family>arial, helvetica, sans-serif</font_family>
+      <font_size>8pt</font_size>
+      <font_weight>bold</font_weight>
+      <html_code><![CDATA[<script>
+document.isEditMode=true;
+returnValue = undefined;
+var win=dialogArguments.win;
+var innovator = dialogArguments.innovator;
+top.aras.uiAddConfigLink2Doc4Assembly(document, "Structure"); //because of Structure control is used on the form
+var structureControl = null;
+
+
+function onClick(r,c) {
+
+}
+
+function onClose() {
+	window.close();
+}
+
+function StructureOnLoad() {
+	structureControl = document.structure;
+	structureControl.setLayout(11);
+}
+
+
+function onTbItemClick(tbItem) {
+	var tbItemId = tbItem.getAttribute('id');
+   window.close();
+}
+
+
+function setupTable() {
+
+	outerTable.style.width=document.body.clientWidth-15;
+	outerTable.style.height=document.body.clientHeight-30;
+}
+
+</script>
+
+<script language="jscript" for="structure" event="StructureOnDbClick(nd)">
+   var selectedID = nd.getId();
+	var MyItem = new Item('Identity','get');
+	MyItem.setID(selectedID);
+	MyItem = MyItem.apply();
+	top.aras.uiShowItemEx(MyItem.getItemByIndex(0).node,undefined,true); 
+</script>
+
+<script language="jscript" for="structure" event="StructureOnLoad()">
+  StructureOnLoad();
+</script>
+
+<script language="jscript" for="structure" event="StructureOnMenuShow(point,item)">
+  return false;
+</script>
+
+<body bgColor="buttonface" leftMargin="0" topMargin="0" MARGINHEIGHT="0" MARGINWIDTH="0" onResize="setupTable();">
+<center>
+<table name="outerTable" id="outerTable" border="0" cellspacing="0" cellpadding"0" width="555" height="630">
+<caption>
+User Administration Wizard
+</caption>
+<tr valign="middle" height="28" width = "100%" bgColor="buttonface"  >
+  <td align="left"><b>Identity Tree</b></td>
+  <td align="right">
+	<button type="button" height="10" onclick="JavaScript: onTbItemClick(this)" id="exit" name="exit" TABINDEX="3">
+   <img src="../images/icons/20x20/20x20_exit_door.gif" border='0' TITLE = "Exit">
+ 	</button>
+ 	<script>var exitButton = this.document.all.exit;</script>
+	</td>
+</tr>
+<tr height="80%">
+	<td colspan="2" align="center">
+		<table id="Table1"  border="0" cellspacing="0" cellpadding="0" width="100%" height="100%">
+			<tr height="100%">
+				<td align="center">
+			  <comment id="controls_commented">
+				 <object id="structure"
+					style="width:100%; height:100%;"
+					classid="../cbin/structure.dll#Aras.Client.Controls.StructureContainer">
+					<param name="AllowDrop" value="true">
+				 </object>
+			  </comment>
+			  <script>
+				 WriteUncommentedObject("controls_commented");
+				</script>
+				</td>
+			</tr>
+		</table>
+</td>
+</tr>
+<tr height="20%">
+<td colspan="2"><span id="canadd" name="canadd">Can Add ItemTypes</span></td>
+</tr>
+</table>
+</center>
+</body>
+]]></html_code>
+      <is_disabled>0</is_disabled>
+      <is_visible>1</is_visible>
+      <list_no_blank>0</list_no_blank>
+      <name>struct</name>
+      <positioning>absolute</positioning>
+      <sort_order>256</sort_order>
+      <source_id keyed_name="5AECE34D9AFF469A8BDD218BD021A88B" type="Body">5AECE34D9AFF469A8BDD218BD021A88B</source_id>
+      <tab_stop>1</tab_stop>
+      <x>-2</x>
+      <y>-2</y>
+     </Item>
+    </Relationships>
+   </Item>
+   <Item type="Form Event" id="0F8C2F54F029454BA32C2198958E1DD5" action="add">
+    <form_event>onload</form_event>
+    <related_id keyed_name="User Admin Wizard OnLoad" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>User Admin Wizard OnLoad</name>
+     </Item>
+    </related_id>
+    <sort_order>128</sort_order>
+    <source_id keyed_name="User Administration Wizard" type="Form">C86C2C77A0604A81AF0A7BC420C19E83</source_id>
+   </Item>
+  </Relationships>
+ </Item>
+</AML>

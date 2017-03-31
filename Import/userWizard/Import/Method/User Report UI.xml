@@ -1,0 +1,60 @@
+<AML>
+ <Item type="Method" id="F204F92D028040E98BDC33D304443F3E" action="add">
+  <method_code><![CDATA[//  User Admin Wizard Opener
+//  Called from an Action to display information about a User Item
+//
+// history
+//  peter  09.06.2007 initial build
+//
+// ====================================================================
+if (!this) {
+   alert('Please select a User First');
+   return;
+}
+if (this.getType() !="User") {
+   alert('Please select a User First');
+   return;
+}
+var myInnovator = this.newInnovator();
+
+// 1) Open a form with the controls and fields that are needed
+// 2) That form, has an on-load event that
+//     a) calls a server method to run the query
+//     b) populates the controls on the form
+
+// Open the Dialog + Form that shows the Wizard
+var formItem = myInnovator.getItemByKeyedName("Form","User Administration Wizard"); 
+if (!formItem) {return false;} 
+var formId = formItem.getID(); 
+if (!formId) {return false;} 
+var title = "User_Admininistration_Wizard";  
+var param = new Object(); 
+param.title  = title; 
+param.formId = formId; 
+param.aras   = top.aras; 
+param.innovator = myInnovator; 
+param.userid = this.getID();
+
+
+var q = new Item("Form", "get"); 
+q.setAttribute("select", "width,height"); 
+q.setProperty("id", formId); 
+var r = q.apply(); 
+if ( r.isError() ) { 
+  this.showError( r ); 
+  return false; 
+} 
+    
+var width  = r.getProperty("width"); 
+var height = r.getProperty("height"); 
+if (!width)  {width  = 300;} 
+if (!height) {height = 500;} 
+    
+var result = showModalDialog("ShowFormAsADialog.html", param, 
+               "dialogHeight:" + height + "px; dialogWidth:" + width + "px; " + 
+               "status:0; help:0; resizable:1; scroll:0;"); 
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>User Admin Wizard Opener</name>
+ </Item>
+</AML>

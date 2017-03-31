@@ -1,0 +1,20 @@
+<AML>
+ <Item type="Item Action" id="7FA4C12044294439B0F4DBCFE3DEBFF8" action="add">
+  <related_id keyed_name="User Admin Wizard" type="Action">
+   <Item type="Action" id="2AC7718F0B9B4A59A86551D5A5CFB953" action="add">
+    <item_query>&lt;Item type="{@type}" id="{@id}" levels= "0" action="get" /&gt;</item_query>
+    <location>client</location>
+    <method keyed_name="User Admin Wizard Opener" type="Method">
+     <Item type="Method" action="get" select="id">
+      <name>User Admin Wizard Opener</name>
+     </Item>
+    </method>
+    <name>User Admin Wizard</name>
+    <target>none</target>
+    <type>item</type>
+   </Item>
+  </related_id>
+  <sort_order>768</sort_order>
+  <source_id keyed_name="User" type="ItemType" name="User">45E899CD2859442982EB22BB2DF683E5</source_id>
+ </Item>
+</AML>

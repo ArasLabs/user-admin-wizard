@@ -1,0 +1,98 @@
+<AML>
+ <Item type="Method" id="53DB1E46C3BD453292192E4CDEAE1383" action="add">
+  <method_code><![CDATA[' User Admin Wizard Server
+' Method queries information about a User to be displayed in a Client Form
+' 
+' History
+' peter    09.06.2007  initial release
+'
+'
+'======================================================================
+' ' this instructs the compiler to use an alternate template in method_config.xml  that allows Functions
+'MethodTemplateName=VBMain;
+Dim skipIDs As String = ""
+Dim myInnovator As Innovator
+
+Function Main() As Item
+	myInnovator = Me.newInnovator()
+	
+	Dim inDom = Me.getItemsByXPath("//params").getItemByIndex(0)
+	
+	Dim UserId As String = inDom.getAttribute("userid","")
+	Dim IdentityID, IdentityKN, SQL As String
+	Dim SqlResults, SqlItems, FinalResults As Item
+	
+	Dim ReturnXML As String = ""
+	
+	' logic
+	' 1) get the Alias Identity to be the root
+	' 2) find membership on the Alias identity
+	' 3) recursively explode the Identity memebership.
+	cco.utilities.writeDebug("user","start")
+	SQL = "select ident.id, ident.keyed_name from [Identity] ident, [Alias] al where al.related_id=ident.id and al.source_id='" & UserId & "'"
+	SqlResults  = myInnovator.applySQL(sql)
+	SqlItems = SqlResults.getItemsByXPath("//row")
+	SqlItems=SqlItems.getItemByIndex(0)
+	IdentityID = SqlItems.getProperty("id","na")
+	IdentityKN = SqlItems.getProperty("keyed_name","na")
+	skipIDs = ""
+	
+	Dim Xresult As XmlDocument = New XMLDocument
+	xResult.loadXML("<identity/>")
+	Dim CurrentID = Xresult.selectSingleNode("//identity")
+	CurrentID.setAttribute("id", IdentityID )
+	CurrentID.setAttribute("name", IdentityKN  )
+
+	Explode(Xresult,CurrentID)
+	SQL="select distinct(itemtype.keyed_name), itemtype.id from ItemType,can_add where can_add.source_id=itemtype.id and can_add.related_id in (" & skipIDs & ") and core='0' order by itemtype.keyed_name"
+	cco.utilities.writedebug("user",SQL)
+	SqlResults  = myInnovator.applySQL(sql)
+	SqlItems = SqlResults.getItemsByXPath("//row")
+	Dim CanAddStr As String=""
+	Dim i As Integer
+	For i=0 To SqlItems.getItemCount()-1
+		CanAddStr = CanAddStr & "<canadd name='" & SqlItems.getItemByIndex(i).getProperty("keyed_name") & "' id='" & SqlItems.getItemByIndex(i).getProperty("id") & "'/>"
+	Next
+
+	ReturnXML = "<Envelope><Body><Result><Item type='UserAdminWizard'>" & CurrentID.outerxml & CanAddStr & "</Item></Result></Body></Envelope>"
+	
+	FinalResults = myInnovator.newItem("","")
+	FinalResults.loadAML(ReturnXML)
+	
+	Return(FinalResults)
+End Function
+	
+Private Function Explode(DOM, Current)   
+	If skipIDs.indexOf(Current.getAttribute("id")) > 0 Then Exit Function
+	If skipIDS = "" Then
+		skipIDs = "'" & Current.getAttribute("id") & "'"
+	Else
+		skipIDs = skipIDs & ",'" & Current.getAttribute("id") & "'"
+	End If
+
+	Dim IdentityID, IdentityKN, SQL As String
+	Dim SqlResults, SqlItems, SqlItem As Item
+	Dim newCurrent As XmlElement
+	SQL = "select ident.id, ident.keyed_name from [Identity] ident, [Member] m where m.related_id='" & Current.getAttribute("id") & "'  and m.source_id=ident.id "
+
+	SqlResults  = myInnovator.applySQL(sql)
+	SqlItems = SqlResults.getItemsByXPath("//row")
+	Dim i As Integer
+	For i=0 To SqlItems.getItemCount()-1
+		SqlItem = SqlItems.getItemByIndex(i)
+		IdentityID = SqlItem.getProperty("id","na")
+		IdentityKN = SqlItem.getProperty("keyed_name","na")	
+		newCurrent=DOM.createElement("identity")
+		newCurrent.setAttribute("id", IdentityID )
+		newCurrent.setAttribute("name", IdentityKN  )
+		Current.appendChild(newCurrent)
+        Explode(DOM,newCurrent)
+	Next
+
+
+End Function	
+]]></method_code>
+  <method_type>VB</method_type>
+  <name>User Admin Wizard Server</name>
+ </Item>
+</AML>

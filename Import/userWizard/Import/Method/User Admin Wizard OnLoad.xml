@@ -1,0 +1,99 @@
+<AML>
+ <Item type="Method" id="4B43A4FC61294B30B7D50192EDBB84FB" action="add">
+  <method_code><![CDATA[// User Admin Wizard OnLoad
+//    used to populate the User Admin Wizard by calling a Server method, and placing the result in the right fields
+//
+// Edit History
+// 09.06.2007   peter     initial release
+// 
+//
+// ========================================================================================================
+
+function explode(node,ident) {
+  var myIdents = ident.getItemsByXPath("identity");
+  for (var i=0; i < myIdents.getItemCount(); i++) {
+     var newIdent = myIdents.getItemByIndex(i);
+     var subNode = node.addChildItem( newIdent.getAttribute("name") );
+     subNode.setImageSRC("../images/other/12x12_radioblue0.gif");
+     subNode.expand(true);
+     subNode.setId(newIdent.getAttribute("id"));
+     explode(subNode,newIdent);
+  }  
+}
+
+function expand(node) {
+	node.expand(true);
+	var childItem = node.getChildItem();
+	while (childItem) {
+	  expand(childItem);
+	  childItem = childItem.getNextItem();
+	}
+}
+
+top.openItemType = function(id) {
+	var MyItem = new Item('ItemType','get');
+	MyItem.setID(id);
+	
+	MyItem = MyItem.apply();
+	
+	top.aras.uiShowItemEx(MyItem.getItemByIndex(0).node,undefined,true);
+}
+
+var myUserid = dialogArguments.userid;
+var QryStr = '<params userid="' + myUserid + '"/>';
+var result = new Item();
+
+result.loadAML(top.aras.applyMethod("User Admin Wizard Server",QryStr));
+if (result.isError() ) {
+   alert(result.getErrorDetail() );
+   return;
+}
+var myItem = result.getItemsByXPath("//Item[@type='UserAdminWizard']");
+if (myItem.getItemCount() < 1) {
+   alert(result.dom.xml);
+   return;
+}
+   
+myItem = myItem.getItemByIndex(0);
+
+
+var myIdents = myItem.getItemsByXPath("identity");
+if (myIdents.getItemCount()<1) {
+   alert('no identities');
+   return;
+}
+var myIdent = myIdents.getItemByIndex(0);
+
+// populate the Identity Tree
+var root = structureControl.setRootItem(myIdent.getAttribute("name","na"));
+if (root) {
+	root.setId( myIdent.getAttribute("id","na") );
+	root.setImageSRC("../images/other/12x12_radioblue0.gif");
+	root.expand(true);
+
+} else {
+   alert('missing root structure object');
+}
+
+explode(root,myIdent);
+expand(root);
+
+// now find the ItemTypes that Can_Add
+var CanAddStr = "<Table width='100%' height='100%'><tr valign='top'><td align='left' width='60'><b>Can Add<br>ItemTypes</td><td width='100%'>";
+//alert(myItem.node.xml);
+var myCAs = myItem.getItemsByXPath("//canadd");
+for (var c=0; c< myCAs.getItemCount(); c++)  {
+  if (c) CanAddStr += ", ";
+  CanAddStr += "<a href=\"javascript:top.openItemType('" + myCAs.getItemByIndex(c).getAttribute("id") + "')\">" + myCAs.getItemByIndex(c).getAttribute("name") + "</a>";
+
+}
+//alert(CanAddStr);
+CanAddStr += "</td></tr></Table>";
+document.all.canadd.innerHTML=CanAddStr;
+
+return;
+]]></method_code>
+  <method_type>JavaScript</method_type>
+  <name>User Admin Wizard OnLoad</name>
+ </Item>
+</AML>
