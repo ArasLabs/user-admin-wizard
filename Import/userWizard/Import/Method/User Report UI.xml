@@ -1,4 +1,4 @@
-<AML>
+﻿<AML>
  <Item type="Method" id="F204F92D028040E98BDC33D304443F3E" action="add">
   <method_code><![CDATA[//  User Admin Wizard Opener
 //  Called from an Action to display information about a User Item

@@ -14,12 +14,14 @@ This project and the following release notes have been migrated from the old Ara
 
 Release | Notes
 --------|--------
+[v4](https://github.com/ArasLabs/user-admin-wizard/releases/tag/v4) | Version 4 on 01.04.2008 for Innovator 8.2.
 [v3](https://github.com/ArasLabs/user-admin-wizard/releases/tag/v3) | Version 3 released on 09/18/2007. Removes unused code (functions) in the JavaScript left over from my copy & paste programming practices.
 
 #### Supported Aras Versions
 
 Project | Aras
 --------|------
+[v4](https://github.com/ArasLabs/user-admin-wizard/releases/tag/v4) | 8.2.0
 [v3](https://github.com/ArasLabs/user-admin-wizard/releases/tag/v3) | 8.1.1
 
 ## Installation
