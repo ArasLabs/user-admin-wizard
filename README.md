@@ -14,6 +14,7 @@ This project and the following release notes have been migrated from the old Ara
 
 Release | Notes
 --------|--------
+[v5](https://github.com/ArasLabs/user-admin-wizard/releases/tag/v5) | Version 5 released on 12.16.2008 for Aras Innovator 9.0.1 and 9.0.2.
 [v4](https://github.com/ArasLabs/user-admin-wizard/releases/tag/v4) | Version 4 on 01.04.2008 for Innovator 8.2.
 [v3](https://github.com/ArasLabs/user-admin-wizard/releases/tag/v3) | Version 3 released on 09/18/2007. Removes unused code (functions) in the JavaScript left over from my copy & paste programming practices.
 
@@ -21,6 +22,7 @@ Release | Notes
 
 Project | Aras
 --------|------
+[v5](https://github.com/ArasLabs/user-admin-wizard/releases/tag/v5) | 9.0.1, 9.0.2
 [v4](https://github.com/ArasLabs/user-admin-wizard/releases/tag/v4) | 8.2.0
 [v3](https://github.com/ArasLabs/user-admin-wizard/releases/tag/v3) | 8.1.1
 

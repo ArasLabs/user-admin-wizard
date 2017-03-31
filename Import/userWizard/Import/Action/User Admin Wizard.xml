@@ -1,6 +1,7 @@
 ﻿<AML>
  <Item type="Action" id="2AC7718F0B9B4A59A86551D5A5CFB953" action="add">
   <item_query>&lt;Item type="{@type}" id="{@id}" levels= "0" action="get" /&gt;</item_query>
+  <label xml:lang="en">User Admin Wizard</label>
   <location>client</location>
   <method keyed_name="User Admin Wizard Opener" type="Method">
    <Item type="Method" action="get" select="id">
